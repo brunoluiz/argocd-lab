@@ -1,0 +1,6 @@
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://kyverno.github.io/kyverno/
+    targetRevision: HEAD
