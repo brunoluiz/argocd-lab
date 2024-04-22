@@ -16,3 +16,10 @@ spec:
     targetRevision: {{ .Values.spec.source.targetRevision }}
     directory:
       recurse: true
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - Replace=true
