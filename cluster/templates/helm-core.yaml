@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: projects
   namespace: argocd
-  # finalizers:
+  finalizers:
   # - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
@@ -11,7 +11,7 @@ spec:
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
-    path: projects/
+    path: projects/ops
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
     directory:
