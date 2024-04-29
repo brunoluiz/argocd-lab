@@ -1,0 +1,13 @@
+{{- if .Values.service.create }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{- include "deployment.name" }}
+  labels:
+    {{- include "deployment.labels.standard" | nindent 4 }}
+spec:
+  ports:
+    {{- toYaml .Values.deployment.ports | nindent 4}}
+  selector:
+    {{- include "deployment.labels.matchLabels" | nindent 4 }}
+{{- end }}
