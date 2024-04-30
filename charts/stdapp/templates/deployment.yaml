@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "deployment.name" }}
+  name: {{ include "deployment.name" . }}
   labels:
-    {{- include "deployment.labels.standard" | nindent 4 }}
+    {{- include "deployment.labels.standard" . | nindent 4 }}
 spec:
   replicas: 2
   selector:
     matchLabels:
-      {{- include "deployment.labels.matchLabels" | nindent 6 }}
+      {{- include "deployment.labels.matchLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -17,14 +17,14 @@ spec:
   template:
     metadata:
       labels:
-        {{- include "deployment.labels.standard" | nindent 8 }}
+        {{- include "deployment.labels.standard" . | nindent 8 }}
     spec:
       {{- if .Values.serviceAccount.create }}
-      serviceAccountName: {{ include "deployment.name" }}
+      serviceAccountName: {{ include "deployment.name" . }}
       {{- end }}
       # TODO: topologySpreadConstraints
       containers:
-      - name: {{ include "deployment.name" }}
+      - name: {{ include "deployment.name" . }}
         {{- if .Values.image.digest }}
         image: {{ .Values.image.registry }}/{{ .Values.image.repository }}@{{ .Values.image.digest }}
         {{- else }}
@@ -46,9 +46,9 @@ spec:
         # Can be ensured with Kyverno policies
         securityContext:
           capabilities:
-            drop:
-              - ALL
+            drop: [ALL]
             readOnlyRootFilesystem: true
-            allowPrivilegeEscalation: falseseccompProfile:
+            allowPrivilegeEscalation: false
+            seccompProfile:
               type: RuntimeDefault
             runAsNonRoot: true
