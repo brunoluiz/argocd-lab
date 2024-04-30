@@ -30,8 +30,9 @@ spec:
         {{- else }}
         image: {{ .Values.image.registry }}/{{ .Values.image.repository }}@{{ .Values.image.tag }}
         {{- end }}
-        ports:
-          {{- toYaml .Values.deployment.ports | nindent 10}}
+        ports: {{- range .Values.deployment.ports }}
+          - containerPort: {{ . }}
+        {{- end }}
         resources:
           {{- toYaml .Values.deployment.resources | nindent 10}}
         env:

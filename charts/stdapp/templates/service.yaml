@@ -6,8 +6,7 @@ metadata:
   labels:
     {{- include "deployment.labels.standard" . | nindent 4 }}
 spec:
-  ports:
-  {{- range .Values.deployment.ports }}
+  ports: {{- range .Values.deployment.ports }}
     - protocol: TCP
       port: {{ . }}
       targetPort: {{ . }}
