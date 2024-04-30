@@ -7,7 +7,11 @@ metadata:
     {{- include "deployment.labels.standard" . | nindent 4 }}
 spec:
   ports:
-    {{- toYaml .Values.deployment.ports | nindent 4}}
+  {{- range .Values.deployment.ports }}
+    - protocol: TCP
+      port: {{ . }}
+      targetPort: {{ . }}
+  {{- end }}
   selector:
     {{- include "deployment.labels.matchLabels" . | nindent 4 }}
 {{- end }}
